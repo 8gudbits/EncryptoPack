@@ -1,0 +1,3 @@
+PqQt5
+psutil
+pycryptodome
