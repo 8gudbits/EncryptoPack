@@ -12,8 +12,12 @@ import hashlib
 import string
 import random
 
-from Cryptodome.Random import get_random_bytes
-from Cryptodome.Cipher import AES
+# from Cryptodome.Random import get_random_bytes
+# from Cryptodome.Cipher import AES
+
+# Import statements changed from Cryptodome to Crypto in newer version of 'pycryptodome'
+from Crypto.Random import get_random_bytes
+from Crypto.Cipher import AES
 
 
 def get_optimal_block_size():
