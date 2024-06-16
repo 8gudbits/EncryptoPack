@@ -27,13 +27,13 @@ git clone --depth 1 https://github.com/TechWhizKid/EncryptoPack.git
 - Next, install the required dependencies using **pip**:
 
 ```bash
-pip install -r requrements.txt
+pip install -r requirements.txt
 ```
 
 - Or if you are on **Linux** or **MacOS**:
 
 ```bash
-pip3 install -r requrements.txt
+pip3 install -r requirements.txt
 ```
 
 - You can also get the windows binary **[here](https://github.com/TechWhizKid/EncryptoPack/releases)**.
