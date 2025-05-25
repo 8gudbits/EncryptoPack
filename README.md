@@ -21,7 +21,7 @@ _EncryptoPack is a simple and user-friendly application that allows you to encry
 - To get started with **EncryptoPack**, you can clone the project using **Git**:
 
 ```bash
-git clone --depth 1 https://github.com/TechWhizKid/EncryptoPack.git
+git clone --depth 1 https://github.com/8gudbits/EncryptoPack.git
 ```
 
 - Next, install the required dependencies using **pip**:
@@ -36,9 +36,9 @@ pip install -r requirements.txt
 pip3 install -r requirements.txt
 ```
 
-- You can also get the windows binary **[here](https://github.com/TechWhizKid/EncryptoPack/releases)**.
+- You can also get the windows binary **[here](https://github.com/8gudbits/EncryptoPack/releases)**.
 
-<ul><a href="https://github.com/TechWhizKid/EncryptoPack/releases/tag/v1.0"><img src="https://img.shields.io/badge/Version-v1.0-blue"></a></ul>
+<ul><a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v1.0"><img src="https://img.shields.io/badge/Version-v1.0-blue"></a></ul>
 
 ---
 
