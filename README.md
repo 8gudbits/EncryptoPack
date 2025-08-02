@@ -12,7 +12,7 @@ _EncryptoPack is a simple and user-friendly application that allows you to encry
 
 - Encrypt files and folders using AES-256 encryption.
 - Generate a recovery key in case you forget your password.
-- Support a separate key file for extra security.
+- Support a separate ivkey file for extra security.
 
 ---
 
@@ -30,7 +30,7 @@ git clone --depth 1 https://github.com/8gudbits/EncryptoPack.git
 pip install -r requirements.txt
 ```
 
-- Or if you are on **Linux** or **MacOS**:
+- Or if you are on **Linux**/**MacOS**:
 
 ```bash
 pip3 install -r requirements.txt
