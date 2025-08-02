@@ -38,7 +38,7 @@ pip3 install -r requirements.txt
 
 - You can also get the windows binary **[here](https://github.com/8gudbits/EncryptoPack/releases)**.
 
-<ul><a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v1.0"><img src="https://img.shields.io/badge/Version-v1.0-blue"></a></ul>
+<ul><a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v1.0"><img src="https://img.shields.io/badge/Version-v1.1-orange"></a></ul>
 
 ---
 
@@ -46,16 +46,8 @@ pip3 install -r requirements.txt
 
 ## Screenshots
 
-<table>
-  <tr>
-    <th>
-      <img src="./Preview/image_1.png" alt="app_image">
-    </th>
-    <th>
-      <img src="./Preview/image_2.png" alt="app_image">
-    </th>
-  <tr>
-</table>
+![App_Image](./Preview/image_1.png)
+![App_Image](./Preview/image_2.png)
 
 </div>
 
