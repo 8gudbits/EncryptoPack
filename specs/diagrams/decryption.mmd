@@ -1,0 +1,76 @@
+%% specs/diagrams/decryption.mmd
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#F5F5F5'}}}%%
+flowchart TD
+    Start([Start]) --> A["Input 'File/Folder'"]
+    A --> B{Is it a folder?}
+    B -->|Yes| C["Search for file with same name + 'CURRENT_EXT'"]
+    C --> D{Does the file exist?}
+    D -->|Yes| E["Set 'file_to_decrypt' to the found file"]
+    D -->|No| F["Emit 'File Not Found' error"] --> End
+    B -->|No| G["Set input file as 'file_to_decrypt'"]
+    E --> H
+    G --> H{Is a separate IV file provided?}
+    H -->|Yes| I["Check legacy format using IV file"]
+    H -->|No| J["Check legacy format without IV file"]
+    I --> K{Is legacy format detected?}
+    J --> K
+    K -->|Yes| L["Emit 'Legacy File' error"] --> End
+    K -->|No| M["Read 'FILE_HEADER'"]
+    M --> N{Does the header match?}
+    N -->|No| O["Emit 'Invalid File' error"] --> End
+    N -->|Yes| P{Is a recovery key provided?}
+    P -->|Yes| Q["Read key from recovery file"]
+    P -->|No| R{Is a password provided?}
+    R -->|No| S["Emit 'Missing Credentials' error"] --> End
+    R -->|Yes| T["Derive key from password"]
+    Q --> U
+    T --> U["Retrieve IV from file or separate file"]
+    U --> V["Verify IV hash"]
+    V --> W{Does the hash match?}
+    W -->|No| X["Emit 'Integrity Error'"] --> End
+    W -->|Yes| Y["Decrypt password check"]
+    Y --> Z{Does it match 'PASS_TEXT'?}
+    Z -->|No| AA["Emit 'Decryption Error'"] --> End
+    Z -->|Yes| AB["Decrypt data with progress reporting"]
+    AB --> AC["Create extraction directory"]
+    AC --> AD["Write decrypted data"]
+    AD --> AE["Verify data hash"]
+    AE --> AF{Does the hash match?}
+    AF -->|No| AG["Emit 'Data Integrity Warning'"]
+    AG --> AH
+    AF -->|Yes| AH["Verify 'EOF_MARKER'"]
+    AH --> AI{Is the marker present?}
+    AI -->|No| AJ["Emit 'File Format Error'"]
+    AJ --> AK
+    AI -->|Yes| AK{Is it a tar file?}
+    AK -->|Yes| AL["Check for 'MARKER_FILE'"]
+    AL --> AM{Is the marker present?}
+    AM -->|Yes| AN["Extract archive"]
+    AN --> AO["Remove marker and tar file"]
+    AM -->|No| AK
+    AK -->|No| AP
+    AO --> AP
+    AK --> AP["Perform cleanup operations"]
+    AP --> AQ{Should files be removed afterward?}
+    AQ -->|Yes| AR["Delete encrypted file and keys"]
+    AQ -->|No| AS
+    AR --> AS["Emit 'Decryption Successful'"]
+    AS --> End([End])
+
+    style Start fill:#4CAF50,stroke:#388E3C
+    style End fill:#F44336,stroke:#D32F2F
+    style B fill:#64B5F6,stroke:#1976D2
+    style D fill:#64B5F6,stroke:#1976D2
+    style H fill:#64B5F6,stroke:#1976D2
+    style K fill:#64B5F6,stroke:#1976D2
+    style N fill:#64B5F6,stroke:#1976D2
+    style P fill:#64B5F6,stroke:#1976D2
+    style R fill:#64B5F6,stroke:#1976D2
+    style W fill:#64B5F6,stroke:#1976D2
+    style Z fill:#64B5F6,stroke:#1976D2
+    style AF fill:#64B5F6,stroke:#1976D2
+    style AI fill:#64B5F6,stroke:#1976D2
+    style AK fill:#64B5F6,stroke:#1976D2
+    style AM fill:#64B5F6,stroke:#1976D2
+    style AQ fill:#64B5F6,stroke:#1976D2
+

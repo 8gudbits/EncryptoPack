@@ -1,0 +1,41 @@
+%% specs/diagrams/encryption.mmd
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#F5F5F5'}}}%%
+flowchart TD
+    Start([Start]) --> A["Input 'File/Folder'"]
+    A --> B{Is it a folder?}
+    B -->|Yes| C["Compress into a temporary file"]
+    C --> D["Create 'MARKER_FILE' containing 'MARKER_FILE_TEXT'"]
+    D --> E["Set 'file_to_encrypt' to the compressed file"]
+    E --> F["Add file to 'temp_files_to_cleanup' list"]
+    B -->|No| G["Set 'file_to_encrypt' to input file"]
+    F --> H
+    G --> H["Generate IV using 'get_random_bytes(16)'"]
+    H --> I["Write 'FILE_HEADER' to the output file"]
+    I --> J{Is separate IV requested?}
+    J -->|No| K["Write IV to the output file"]
+    J -->|Yes| L["Generate IV key file"]
+    L --> M["Write IV to the separate file"]
+    K --> N
+    M --> N["Write IV hash using 'sha256(iv)' to the output file"]
+    N --> O["Write encrypted 'PASS_TEXT' to the output file"]
+    O --> P["Encrypt data in blocks with progress reporting"]
+    P --> Q["Write data hash using 'sha256(encrypted)' to the output file"]
+    Q --> R["Write 'EOF_MARKER' to the output file"]
+    R --> S{Is recovery key requested?}
+    S -->|Yes| T["Generate recovery key"]
+    T --> U["Write password hash to the recovery file"]
+    S -->|No| U
+    U --> V["Execute cleanup operations"]
+    V --> W{Were there any failed files?}
+    W -->|Yes| X["Emit warning with list of failed files"]
+    W -->|No| Y["Emit operation completed signal"]
+    X --> Y
+    Y --> End([End])
+
+    style Start fill:#4CAF50,stroke:#388E3C
+    style End fill:#F44336,stroke:#D32F2F
+    style B fill:#64B5F6,stroke:#1976D2
+    style J fill:#64B5F6,stroke:#1976D2
+    style S fill:#64B5F6,stroke:#1976D2
+    style W fill:#64B5F6,stroke:#1976D2
+
