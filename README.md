@@ -31,10 +31,10 @@ Take control of your digital privacy with EncryptoPack - where security meets si
 <table>
   <tr>
     <td>
-      <img src="./preview/image_1.png" alt="Main Interface" width="400"/>
+      <img src="./Preview/image_1.png" alt="Main Interface" width="400"/>
     </td>
     <td>
-      <img src="./preview/image_2.png" alt="Main Interface" width="400"/>
+      <img src="./Preview/image_2.png" alt="Main Interface" width="400"/>
     </td>
   </tr>
 </table>
