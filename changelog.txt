@@ -1,6 +1,6 @@
 📦 EncryptoPack Changelog
 
-🔐 Version 2.0 [in-dev]
+🔐 Version 2.0 [Aug 8, 2025]
 - Updated: File extension from .pack (v1.x) to .pv2
 - Updated: Encrypted file format (incompatible with v1.x)
 - Added: Password verification before decryption
