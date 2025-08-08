@@ -129,7 +129,7 @@ class MainWindow(QMainWindow):
 
         # Create main container
         main_frame = QFrame(self)
-        main_frame.setGeometry(10, 10, 426, 444)
+        main_frame.setGeometry(10, 10, 430, 444)
 
         # Layout positions
         y_pos = 0
@@ -234,12 +234,12 @@ class MainWindow(QMainWindow):
         y_pos += 25
 
         self.encrypt_button = StyledButton("Encrypt", main_frame)
-        self.encrypt_button.setGeometry(0, y_pos, 210, 24)
+        self.encrypt_button.setGeometry(0, y_pos, 212, 24)
         self.encrypt_button.setStyleSheet(UITheme.get_encrypt_button_style())
         self.encrypt_button.clicked.connect(self.encrypt_button_click)
 
         self.decrypt_button = StyledButton("Decrypt", main_frame)
-        self.decrypt_button.setGeometry(216, y_pos, 210, 24)
+        self.decrypt_button.setGeometry(218, y_pos, 212, 24)
         self.decrypt_button.setStyleSheet(UITheme.get_decrypt_button_style())
         self.decrypt_button.clicked.connect(self.decrypt_button_click)
         y_pos += 30
