@@ -1,0 +1,42 @@
+%% specs/diagrams/block_size.mmd
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#F5F5F5'}}}%%
+flowchart TD
+    A("Start: Check Available RAM")
+    B{"Available RAM (GB)?"}
+    C["Return 64 KB<br>(65,536 bytes)"]
+    D["Return 128 KB<br>(131,072 bytes)"]
+    E["Return 256 KB<br>(262,144 bytes)"]
+    F["Return 512 KB<br>(524,288 bytes)"]
+    G["Return 1 MB<br>(1,048,576 bytes)"]
+    H["Return 1.5 MB<br>(1,572,864 bytes)"]
+    I["Return 3 MB<br>(3,145,728 bytes)"]
+    J["Error: Fallback to 512 KB<br>(524,288 bytes)"]
+    K("Return")
+
+    A --> B
+    B -->|"< 1 GB"| C
+    B -->|"1 - 2 GB"| D
+    B -->|"2 - 3 GB"| E
+    B -->|"3 - 4 GB"| F
+    B -->|"4 - 6 GB"| F
+    B -->|"6 - 8 GB"| G
+    B -->|"8 - 12 GB"| G
+    B -->|"12 - 16 GB"| H
+    B -->|"16 - 24 GB"| H
+    B -->|"24 - 32 GB"| I
+    B -->|"\>= 32 GB"| I
+    B -->|"Error Occurred"| J
+    C --> K
+    D --> K
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
+    style A fill:#4CAF50,stroke:#388E3C
+    style B fill:#64B5F6,stroke:#1976D2
+    style J fill:#F44336,stroke:#D32F2F
+    style K fill:#4CAF50,stroke:#388E3C
+

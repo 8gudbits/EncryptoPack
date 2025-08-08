@@ -1,55 +1,91 @@
-# EncryptoPack
+<div align="center"><img src="logo.png" alt="EncryptoPack Logo" width="100"></div>
 
-**An intuitive application for securing files and folders through encryption.**
+# EncryptoPack - AES-256 Encryption for Files and Folders
 
-_Encryption is a process of transforming data into an unreadable form, so that only authorized parties can access it. Encryption helps protect your privacy and security by preventing unauthorized access, modification, or theft of your files and folders._
+EncryptoPack is a lightweight application designed to safeguard sensitive data with industry-grade encryption. Whether protecting personal documents or securing work files, EncryptoPack makes it easy to encrypt and decrypt files and folders with confidence.
 
-_EncryptoPack is a simple and user-friendly application that allows you to encrypt and decrypt your files and folders using AES-256 encryption, one of the most secure and widely used encryption algorithms._
+## 🔒 Why Encryption Matters
 
----
+Encryption transforms readable data into a scrambled format that can only be accessed by authorized users. It's a critical layer of defense against:
 
-## Features
+- Unauthorized access
+- Data tampering
+- Theft or leaks
 
-- Encrypt files and folders using AES-256 encryption.
-- Generate a recovery key in case you forget your password.
-- Support a separate ivkey file for extra security.
+## ⚙️ What EncryptoPack Offers
 
----
+- Encryption of files and folders using AES-256 encryption.
+- Simple Interface - No technical expertise required
+- Fast Performance - Encrypt large folders quickly
+- Generate a recovery key to recover forgotten password
+- Supports a separate ivkey file for extra security
 
-## Get Started
-
-- To get started with **EncryptoPack**, you can clone the project using **Git**:
-
-```bash
-git clone --depth 1 https://github.com/8gudbits/EncryptoPack.git
-```
-
-- Next, install the required dependencies using **pip**:
-
-```bash
-pip install -r requirements.txt
-```
-
-- Or if you are on **Linux**/**MacOS**:
-
-```bash
-pip3 install -r requirements.txt
-```
-
-- You can also get the windows binary **[here](https://github.com/8gudbits/EncryptoPack/releases)**.
-
-<ul><a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v1.0"><img src="https://img.shields.io/badge/Version-v1.1-orange"></a></ul>
+Take control of your digital privacy with EncryptoPack - where security meets simplicity.
 
 ---
+
+## 🖼️ Screenshots
 
 <div align="center">
 
-## Screenshots
-
-![App_Image](./Preview/image_1.png)
-![App_Image](./Preview/image_2.png)
+<table>
+  <tr>
+    <td>
+      <img src="./Preview/image_1.png" alt="Main Interface" width="400"/>
+    </td>
+    <td>
+      <img src="./Preview/image_2.png" alt="Main Interface" width="400"/>
+    </td>
+  </tr>
+</table>
 
 </div>
+
+> Tip: You can also drag your files directly into the app - no browsing needed!
+
+---
+
+## 🚀 Get Started with EncryptoPack
+
+#### 🧑‍💻 For Most Users - Download the Ready-to-Use App
+
+No setup required! Just download the latest Windows binary from the [Releases Page](https://github.com/8gudbits/EncryptoPack/releases).
+
+<a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v2.0"> <img src="https://img.shields.io/badge/Version-v2.0-orange" alt="Latest Version Badge"> </a>
+
+#### 🛠️ For Developers - Run from Source
+
+If you prefer to run EncryptoPack from source or you're on Linux/macOS, follow these steps:
+
+1. Clone the repository using git:
+
+```
+git clone --depth 1 https://github.com/8gudbits/EncryptoPack.git
+cd EncryptoPack/src
+```
+
+2. Install dependencies:
+
+- On Windows:
+  ```
+  pip install -r requirements.txt
+  ```
+- On Linux/macOS:
+  ```
+  pip3 install -r requirements.txt
+  ```
+
+Once installed, you're ready to run EncryptoPack locally and start encrypting your files securely.
+
+> Note: Encrypted with an older format? You'll be informed about the compatible version for decryption - no surprises, no broken files.
+
+---
+
+## Documentation
+
+Specification files are in [/specs](/specs):
+- [Format Specification](/specs/format_spec.md)
+- [Diagrams](/specs/diagrams)
 
 ---
 

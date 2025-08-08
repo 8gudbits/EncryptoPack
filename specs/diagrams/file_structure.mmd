@@ -1,0 +1,24 @@
+%% specs/diagrams/file_structure.mmd
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#F5F5F5'}}}%%
+classDiagram
+    class PV2_FILE {
+        [+] FILE_HEADER (3b)
+        [+] IV_KEY (16b)
+        [+] IV_HASH (32b)
+        [+] PASSWORD_CHECK (8b)
+        [+] ENCRYPTED_DATA (var)
+        [+] DATA_HASH (32b)
+        [+] EOF_MARKER (3b)
+    }
+
+    class IVKEY_FILE {
+        [+] IV_KEY : 16 bytes
+    }
+
+    class RKEY_FILE {
+        [+] PASSWORD_HASH : 64 bytes
+    }
+
+    PV2_FILE --> IVKEY_FILE : optional
+    PV2_FILE --> RKEY_FILE : optional
+

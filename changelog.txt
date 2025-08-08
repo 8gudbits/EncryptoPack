@@ -1,8 +1,20 @@
-EncryptoPack 1.1
-- Updated GUI module from PyQt5 to PyQt6
-- Updated GUI design
-- Added threading to prevent random freezing during encryption/decryption
+📦 EncryptoPack Changelog
 
-EncryptoPack 1.0
+🔐 Version 2.0 [in-dev]
+- Updated: File extension from .pack (v1.x) to .pv2
+- Updated: Encrypted file format (incompatible with v1.x)
+- Added: Password verification before decryption
+- Added: File association support for .pv2 files (auto-select)
+- Added: Drag-and-drop support for file and folder input
+- Added: Adaptive theming support for system light/dark mode
+- Improved: File selection interface with dedicated file/folder buttons
+- Improved: Minor UI refinements
+
+🖼️ Version 1.1 [Aug 3, 2025]
+- Upgraded: GUI module migrated from PyQt5 to PyQt6
+- Improved: Refreshed GUI design
+- Fixed: Added threading to prevent freezing during encryption/decryption
+
+🚀 Version 1.0 [Aug 17, 2023]
 - Initial release
 
