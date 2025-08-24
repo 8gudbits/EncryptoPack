@@ -18,6 +18,61 @@ from PyQt6.QtCore import Qt
 import os
 import sys
 import subprocess
+import re
+
+
+class PasswordComplexityChecker:
+    """Checks password complexity and provides a strength score."""
+    @staticmethod
+    def check_password_strength(password):
+        """Check password complexity and return strength score (0-100)."""
+        if not password:
+            return 0
+
+        score = 0
+
+        # Length (max 30 points)
+        length_score = min(len(password) * 2, 30)
+        score += length_score
+
+        # Character variety (max 70 points)
+        variety_bonus = 0
+
+        # Uppercase letters
+        if re.search(r"[A-Z]", password):
+            variety_bonus += 10
+
+        # Lowercase letters
+        if re.search(r"[a-z]", password):
+            variety_bonus += 10
+
+        # Numbers
+        if re.search(r"[0-9]", password):
+            variety_bonus += 15
+
+        # Special characters
+        if re.search(r"[^A-Za-z0-9]", password):
+            variety_bonus += 20
+
+        # Additional bonus for multiple character types
+        char_types = 0
+        if re.search(r"[A-Z]", password):
+            char_types += 1
+        if re.search(r"[a-z]", password):
+            char_types += 1
+        if re.search(r"[0-9]", password):
+            char_types += 1
+        if re.search(r"[^A-Za-z0-9]", password):
+            char_types += 1
+
+        if char_types >= 3:
+            variety_bonus += 15
+        elif char_types >= 2:
+            variety_bonus += 5
+
+        score += min(variety_bonus, 70)
+
+        return min(score, 100)
 
 
 class PlaceholderLineEdit(QLineEdit):
@@ -30,7 +85,7 @@ class PlaceholderLineEdit(QLineEdit):
         user_interaction (bool): Tracks if user has interacted with the field
         user_input (bool): Tracks if user has entered any text
     """
-    def __init__(self, placeholder='', color='gray', parent=None):
+    def __init__(self, placeholder="", color="gray", parent=None):
         super().__init__(parent)
         self.placeholder = placeholder
         self.placeholder_color = QColor(color)
@@ -95,6 +150,30 @@ class StyledButton(QPushButton):
         self.setStyleSheet(UITheme.get_styled_button_style())
 
 
+class PasswordStrengthBar(QProgressBar):
+    """A progress bar that shows password strength with color coding."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setFixedHeight(6)
+        self.setTextVisible(False)
+        self.setRange(0, 100)
+        self.setValue(0)
+        self.update_style(0)
+
+    def update_strength(self, password):
+        """Update the strength bar based on password."""
+        if not password:  # Empty password
+            score = 0
+        else:
+            score = PasswordComplexityChecker.check_password_strength(password)
+        self.setValue(score)
+        self.update_style(score)
+
+    def update_style(self, score):
+        """Update the style based on password strength score."""
+        self.setStyleSheet(UITheme.get_password_strength_bar_style(score))
+
+
 class MainWindow(QMainWindow):
     """The main application window for file encryption/decryption.
 
@@ -113,7 +192,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setAcceptDrops(True)
         self.setWindowTitle(f"{APP_NAME} {CURRENT_VERSION}")
-        self.setFixedSize(450, 460)
+        self.setFixedSize(450, 472)
         self.setWindowOpacity(0.95)
 
         # Create application icon
@@ -129,7 +208,7 @@ class MainWindow(QMainWindow):
 
         # Create main container
         main_frame = QFrame(self)
-        main_frame.setGeometry(10, 10, 430, 444)
+        main_frame.setGeometry(10, 10, 430, 459)
 
         # Layout positions
         y_pos = 0
@@ -139,7 +218,7 @@ class MainWindow(QMainWindow):
         file_section_label.setGeometry(0, y_pos, 430, 20)
         y_pos += 25
 
-        self.file_path_entry = PlaceholderLineEdit(placeholder="File/Folder Path", color='#888', parent=main_frame)
+        self.file_path_entry = PlaceholderLineEdit(placeholder="File/Folder Path", color="#888", parent=main_frame)
         self.file_path_entry.setGeometry(0, y_pos, 430, 24)
         self.file_path_entry.setText(os.getcwd())
         y_pos += 30
@@ -166,20 +245,44 @@ class MainWindow(QMainWindow):
         security_section_label.setGeometry(0, y_pos, 430, 20)
         y_pos += 25
 
-        self.password_entry = PlaceholderLineEdit(placeholder="Password", color='#888', parent=main_frame)
+        self.password_entry = PlaceholderLineEdit(placeholder="Password", color="#888", parent=main_frame)
         self.password_entry.setGeometry(0, y_pos, 171, 24)
         self.password_entry.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password_entry.textChanged.connect(self.update_password_strength)
 
-        self.confirm_password_entry = PlaceholderLineEdit(placeholder="Confirm Password", color='#888', parent=main_frame)
+        self.confirm_password_entry = PlaceholderLineEdit(placeholder="Confirm Password", color="#888", parent=main_frame)
         self.confirm_password_entry.setGeometry(177, y_pos, 172, 24)
         self.confirm_password_entry.setEchoMode(QLineEdit.EchoMode.Password)
+        self.confirm_password_entry.textChanged.connect(self.check_password_match)
 
         self.password_show_button = StyledButton("Show \U0001F513", main_frame) # \U0001F513 = 🔓
         self.password_show_button.setGeometry(355, y_pos, 75, 24)
         self.password_show_button.clicked.connect(self.toggle_password_visibility)
         y_pos += 30
 
-        self.recovery_key_entry = PlaceholderLineEdit(placeholder="Recovery key file", color='#888', parent=main_frame)
+        # Password strength bar (simple progress bar style)
+        self.password_strength_bar = PasswordStrengthBar(main_frame)
+        self.password_strength_bar.setGeometry(0, y_pos, 430, 6)
+        y_pos += 8
+
+        # Password match indicator
+        self.password_match_label = QLabel(main_frame)
+        self.password_match_label.setGeometry(0, y_pos, 430, 16)
+        self.password_match_label.setStyleSheet(
+            """
+            QLabel {
+                font-size: 11px;
+                color: #888;
+                background-color: transparent;
+                padding: 0px;
+                margin: 0px;
+            }
+        """
+        )
+        self.password_match_label.setText("")
+        y_pos += 4
+
+        self.recovery_key_entry = PlaceholderLineEdit(placeholder="Recovery key file", color="#888", parent=main_frame)
         self.recovery_key_entry.setGeometry(0, y_pos, 349, 24)
 
         self.recovery_key_select_button = StyledButton("Select \U0001F510", main_frame) # \U0001F510 = 🔐
@@ -187,7 +290,7 @@ class MainWindow(QMainWindow):
         self.recovery_key_select_button.clicked.connect(self.recovery_key_select_button_clicked)
         y_pos += 30
 
-        self.iv_key_file_entry = PlaceholderLineEdit(placeholder="IV-key file", color='#888', parent=main_frame)
+        self.iv_key_file_entry = PlaceholderLineEdit(placeholder="IV-key file", color="#888", parent=main_frame)
         self.iv_key_file_entry.setGeometry(0, y_pos, 349, 24)
 
         self.iv_key_file_select_button = StyledButton("Select \U0001F511", main_frame) # \U0001F511 = 🔑
@@ -266,6 +369,61 @@ class MainWindow(QMainWindow):
         # Apply the color palette
         self.set_color_palette()
 
+    def update_password_strength(self):
+        """Update password strength bar in real-time."""
+        password = self.password_entry.text()
+        self.password_strength_bar.update_strength(password)
+
+        # Also check password match when password changes
+        self.check_password_match()
+
+    def check_password_match(self):
+        """Check if passwords match and update indicator."""
+        password = self.password_entry.text()
+        confirm_password = self.confirm_password_entry.text()
+
+        if not password or not confirm_password:
+            self.password_match_label.setText("")
+            self.password_match_label.setStyleSheet(
+                """
+                QLabel {
+                    font-size: 11px;
+                    color: #888;
+                    background-color: transparent;
+                    padding: 0px;
+                    margin: 0px;
+                }
+            """
+            )
+        elif password == confirm_password:
+            self.password_match_label.setText("✓ Passwords match")
+            self.password_match_label.setStyleSheet(
+                """
+                QLabel {
+                    font-size: 11px;
+                    color: #007E33;
+                    background-color: transparent;
+                    font-weight: bold;
+                    padding: 0px;
+                    margin: 0px;
+                }
+            """
+            )
+        else:
+            self.password_match_label.setText("✗ Passwords do not match")
+            self.password_match_label.setStyleSheet(
+                """
+                QLabel {
+                    font-size: 11px;
+                    color: #ff4444;
+                    background-color: transparent;
+                    font-weight: bold;
+                    padding: 0px;
+                    margin: 0px;
+                }
+            """
+            )
+
     def set_color_palette(self):
         """Applies the UI theme's color palette and stylesheet to the window."""
         self.setPalette(UITheme.get_color_palette())
@@ -299,7 +457,6 @@ class MainWindow(QMainWindow):
                 self.recovery_key_entry.setText(file_path)
             else:
                 self.file_path_entry.setText(file_path)
-
 
     def update_progress(self, value):
         """Updates the progress bar with the current operation progress.
@@ -371,10 +528,10 @@ class MainWindow(QMainWindow):
         if not os.path.exists(path):
             path = os.getcwd()
 
-        if sys.platform.startswith('win'):
+        if sys.platform.startswith("win"):
             subprocess.Popen(f'explorer "{path}"', shell=False)
         else:
-            subprocess.Popen(['xdg-open', path])
+            subprocess.Popen(["xdg-open", path])
 
     def select_file(self):
         """Opens a file dialog and sets the selected file path."""
@@ -393,7 +550,7 @@ class MainWindow(QMainWindow):
         if self.password_entry.echoMode() == QLineEdit.EchoMode.Password:
             self.password_entry.setEchoMode(QLineEdit.EchoMode.Normal)
             self.confirm_password_entry.setEchoMode(QLineEdit.EchoMode.Normal)
-            self.password_show_button.setText("Hide \U0001F512") # \U0001F6E1 = 🔒
+            self.password_show_button.setText("Hide \U0001F512") # \U0001F512 = 🔒
         else:
             self.password_entry.setEchoMode(QLineEdit.EchoMode.Password)
             self.confirm_password_entry.setEchoMode(QLineEdit.EchoMode.Password)
@@ -542,7 +699,7 @@ class MainWindow(QMainWindow):
             separate_iv_key = iv_key_file.strip()
         if not recovery_key_file.strip() == "":
             hash_password = False
-            with open(recovery_key_file.strip(), 'r') as file:
+            with open(recovery_key_file.strip(), "r") as file:
                 password = file.read(64)
 
         # Disable UI during operation
