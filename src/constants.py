@@ -1,6 +1,6 @@
 # App Info
 APP_NAME = "EncryptoPack"
-CURRENT_VERSION = "v2.0"
+CURRENT_VERSION = "v2.1"
 
 # Format Identification
 FILE_HEADER = b"PV2"
