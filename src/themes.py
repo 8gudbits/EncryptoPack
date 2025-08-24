@@ -23,6 +23,27 @@ class UITheme:
         return window_color.value() < 128
 
     @staticmethod
+    def get_password_strength_color(score):
+        """Get color based on password strength score.
+
+        Args:
+            score (int): Password strength score from 0-100
+
+        Returns:
+            str: Hex color code for the strength level
+        """
+        if score < 20:
+            return "#ff4444"  # Red - Very weak
+        elif score < 40:
+            return "#ff8800"  # Orange - Weak
+        elif score < 60:
+            return "#ffbb33"  # Yellow - Fair
+        elif score < 80:
+            return "#00C851"  # Green - Good
+        else:
+            return "#007E33"  # Dark Green - Strong
+
+    @staticmethod
     def get_color_palette():
         if UITheme.is_dark_mode():
             dark_palette = QPalette()
@@ -225,6 +246,43 @@ class UITheme:
             QProgressBar::chunk {{
                 background-color: #d2691e;
                 border-radius: 4px;
+            }}
+        """
+
+    @staticmethod
+    def get_password_strength_bar_style(score):
+        """Provides styling for password strength progress bars.
+
+        Args:
+            score (int): Password strength score from 0-100
+
+        Returns:
+            str: CSS-style string for password strength QProgressBar
+        """
+        if UITheme.is_dark_mode():
+            bg = "#252525"
+            border_color = "#4a4a4a"  # Subtle border for dark mode
+        else:
+            bg = "#f0f0f0"
+            border_color = "#cccccc"  # Subtle border for light mode
+
+        # If score is 0 (empty password), use subtle border that matches background
+        if score == 0:
+            color = border_color  # Use the subtle border color
+        else:
+            color = UITheme.get_password_strength_color(score)
+
+        return f"""
+            QProgressBar {{
+                border: 1px solid {color};
+                border-radius: 3px;
+                background-color: {bg};
+                padding: 0px;
+                margin: 0px;
+            }}
+            QProgressBar::chunk {{
+                background-color: {color};
+                border-radius: 2px;
             }}
         """
 
