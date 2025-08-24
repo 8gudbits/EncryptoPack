@@ -51,7 +51,7 @@ Take control of your digital privacy with EncryptoPack - where security meets si
 
 No setup required! Just download the latest Windows binary from the [Releases Page](https://github.com/8gudbits/EncryptoPack/releases).
 
-<a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v2.0"> <img src="https://img.shields.io/badge/Version-v2.0-orange" alt="Latest Version Badge"> </a>
+<a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v2.1"> <img src="https://img.shields.io/badge/Version-v2.1-orange" alt="Latest Version Badge"> </a>
 
 #### 🛠️ For Developers - Run from Source
 
