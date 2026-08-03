@@ -2,11 +2,11 @@
 
 # EncryptoPack - AES-256 Encryption for Files and Folders
 
-EncryptoPack is a lightweight application designed to safeguard sensitive data with industry-grade encryption. Whether protecting personal documents or securing work files, EncryptoPack makes it easy to encrypt and decrypt files and folders with confidence.
+EncryptoPack is a lightweight app built to keep your sensitive data safe with industry-grade encryption. Whether you're locking down personal documents or securing work files, it makes encrypting and decrypting files and folders quick and painless.
 
 ## 🔒 Why Encryption Matters
 
-Encryption transforms readable data into a scrambled format that can only be accessed by authorized users. It's a critical layer of defense against:
+Encryption turns readable data into a scrambled mess that only authorized users can make sense of. It's one of your best defenses against:
 
 - Unauthorized access
 - Data tampering
@@ -14,11 +14,11 @@ Encryption transforms readable data into a scrambled format that can only be acc
 
 ## ⚙️ What EncryptoPack Offers
 
-- Encryption of files and folders using AES-256 encryption.
-- Simple Interface - No technical expertise required
-- Fast Performance - Encrypt large folders quickly
-- Generate a recovery key to recover forgotten password
-- Supports a separate ivkey file for extra security
+- File and folder encryption using AES-256
+- A simple interface - no technical expertise needed
+- Fast performance, even on large folders
+- A recovery key so a forgotten password doesn't lock you out for good
+- Support for a separate ivkey file if you want an extra layer of security
 
 Take control of your digital privacy with EncryptoPack - where security meets simplicity.
 
@@ -41,30 +41,30 @@ Take control of your digital privacy with EncryptoPack - where security meets si
 
 </div>
 
-> Tip: You can also drag your files directly into the app - no browsing needed!
+> Tip: You can also just drag your files straight into the app — no need to browse for them.
 
 ---
 
 ## 🚀 Get Started with EncryptoPack
 
-#### 🧑‍💻 For Most Users - Download the Ready-to-Use App
+#### For Most Users — Download the Ready-to-Use App
 
-No setup required! Just download the latest Windows binary from the [Releases Page](https://github.com/8gudbits/EncryptoPack/releases).
+No setup needed. Just grab the latest Windows binary from the [Releases Page](https://github.com/8gudbits/EncryptoPack/releases).
 
 <a href="https://github.com/8gudbits/EncryptoPack/releases/tag/v2.1"> <img src="https://img.shields.io/badge/Version-v2.1-orange" alt="Latest Version Badge"> </a>
 
 #### 🛠️ For Developers - Run from Source
 
-If you prefer to run EncryptoPack from source or you're on Linux/macOS, follow these steps:
+Prefer running it from source, or on Linux/macOS? Here's how:
 
-1. Clone the repository using git:
+1. Clone the repository:
 
 ```
 git clone --depth 1 https://github.com/8gudbits/EncryptoPack.git
 cd EncryptoPack/src
 ```
 
-2. Install dependencies:
+2. Install the dependencies:
 
 - On Windows:
   ```
@@ -75,15 +75,15 @@ cd EncryptoPack/src
   pip3 install -r requirements.txt
   ```
 
-Once installed, you're ready to run EncryptoPack locally and start encrypting your files securely.
+That's it — you're ready to run EncryptoPack locally and start encrypting your files.
 
-> Note: Encrypted with an older format? You'll be informed about the compatible version for decryption - no surprises, no broken files.
+> Note: Got a file encrypted with an older format? EncryptoPack will let you know which version you need to decrypt it — no surprises, no broken files.
 
 ---
 
 ## Documentation
 
-Specification files are in [/specs](/specs):
+Specification files live in [/specs](/specs):
 - [Format Specification](/specs/format_spec.md)
 - [Diagrams](/specs/diagrams)
 
